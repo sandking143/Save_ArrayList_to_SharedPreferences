@@ -1,6 +1,6 @@
 package com.example.savearraylisttosharedpreferences
 
-import android.content.Context
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,8 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 
 class CourseAdapter(
-    private val courseModalArrayList: ArrayList<CourseModal>,
-    private val context: Context
+    private val courseModalArrayList: ArrayList<CourseModal>
 ) :
 
 

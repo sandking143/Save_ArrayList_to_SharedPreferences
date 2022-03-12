@@ -33,13 +33,10 @@ class MainActivity : AppCompatActivity() {
         saveBtn = findViewById(R.id.idBtnSave)
         courseRV = findViewById(R.id.idRVCourses)
 
-        loadData()
-        buildRecyclerView()
-
-
         addBtn!!.setOnClickListener {
             courseModalArrayList!!.add(
-                CourseModal(courseNameEdt!!.text.toString(),courseDescEdt!!.text.toString()))
+                CourseModal(courseNameEdt!!.text.toString(), courseDescEdt!!.text.toString())
+            )
 
             adapter!!.notifyItemInserted(courseModalArrayList!!.size)
         }
@@ -47,11 +44,27 @@ class MainActivity : AppCompatActivity() {
         saveBtn!!.setOnClickListener {
             saveData()
         }
+
+
+        loadData()
+        buildRecyclerView()
+
+    }
+
+    private fun saveData() {
+        val sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        val gson = Gson()
+        val json = gson.toJson(courseModalArrayList)
+
+        editor.putString("courses", json)
+        editor.apply()
+        Toast.makeText(this, "Saved to Shared preferences. ", Toast.LENGTH_SHORT).show()
     }
 
     private fun buildRecyclerView() {
 
-        adapter = CourseAdapter(courseModalArrayList!!, this@MainActivity)
+        adapter = CourseAdapter(courseModalArrayList!!)
 
         val manager = LinearLayoutManager(this)
         courseRV!!.setHasFixedSize(true)
@@ -71,17 +84,13 @@ class MainActivity : AppCompatActivity() {
         if (courseModalArrayList == null) {
             courseModalArrayList = ArrayList()
         }
+//        fun saveData() {
+//
+//
+//        }
+
+
     }
 
-    private fun saveData() {
 
-        val sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-        val gson = Gson()
-        val json = gson.toJson(courseModalArrayList)
-
-        editor.putString("courses", json)
-        editor.apply()
-        Toast.makeText(this, "Saved Array List to Shared preferences. ", Toast.LENGTH_SHORT).show()
-    }
 }
